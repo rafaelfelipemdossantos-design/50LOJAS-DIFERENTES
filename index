@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#4F46E5">
+    <title>Roteiro Pro</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #4F46E5;
+            --primary-dark: #4338CA;
+            --secondary: #6366F1;
+            --success: #10B981;
+            --danger: #EF4444;
+            --warning: #F59E0B;
+            --bg: #F9FAFB;
+            --surface: #FFFFFF;
+            --text-main: #111827;
+            --text-muted: #6B7280;
+            --border: #E5E7EB;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --radius-lg: 16px;
+            --radius-md: 12px;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #111827;
+                --surface: #1F2937;
+                --text-main: #F9FAFB;
+                --text-muted: #9CA3AF;
+                --border: #374151;
+            }
+        }
+
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            line-height: 1.5;
+            transition: background 0.3s ease;
+        }
+
+        /* --- Header Moderno --- */
+        .app-header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            padding: 40px 20px 60px;
+            text-align: center;
+            border-bottom-left-radius: 30px;
+            border-bottom-right-radius: 30px;
+            box-shadow: var(--shadow);
+        }
+
+        .app-header h1 {
+            margin: 0;
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: -0.025em;
+        }
+
+        .app-header p {
+            margin: 5px 0 0;
+            font-size: 0.85rem;
+            opacity: 0.85;
+        }
+
+        /* --- Dashboard --- */
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin: -35px 15px 20px;
+            background: var(--surface);
+            padding: 20px;
+            border-radius: var(--radius-lg);
+            box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1);
+            border: 1px solid var(--border);
+        }
+
+        .stat-card {
+            text-align: center;
+        }
+
+        .stat-value {
+            display: block;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .stat-label {
+            font-size: 0.65rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* --- Barra de Busca --- */
+        .search-container {
+            padding: 0 20px;
+            margin-bottom: 20px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 14px 20px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border);
+            background: var(--surface);
+            color: var(--text-main);
+            font-size: 0.95rem;
+            outline: none;
+            box-shadow: var(--shadow);
+            transition: border-color 0.2s;
+        }
+
+        .search-input:focus {
+            border-color: var(--primary);
+        }
+
+        /* --- Lista de Lojas --- */
+        .container {
+            padding: 0 20px 120px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 25px 0 12px;
+        }
+
+        .section-title {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .store-card {
+            background: var(--surface);
+            border-radius: var(--radius-md);
+            padding: 16px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            border: 1px solid var(--border);
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            animation: fadeIn 0.4s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .store-card:active {
+            transform: scale(0.98);
+        }
+
+        .check-btn {
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
+            border: 2px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        .store-card.visited .check-btn {
+            background: var(--success);
+            border-color: var(--success);
+            color: white;
+        }
+
+        .store-info {
+            flex-grow: 1;
+        }
+
+        .store-name {
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .store-card.visited .store-name {
+            color: var(--text-muted);
+            text-decoration: line-through;
+        }
+
+        .store-meta {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .icon-action {
+            padding: 8px;
+            border-radius: 8px;
+            background: var(--bg);
+            color: var(--text-muted);
+            border: none;
+            cursor: pointer;
+        }
+
+        .icon-action.map { color: var(--primary); }
+        .icon-action.delete { color: var(--danger); }
+
+        /* --- Floating Menu (Dock) --- */
+        .dock {
+            position: fixed;
+            bottom: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 400px;
+            background: rgba(var(--surface), 0.85);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-radius: 24px;
+            padding: 12px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            z-index: 1000;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .dock-item {
+            border: none;
+            background: none;
+            color: var(--text-muted);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            font-size: 0.65rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .dock-item.active { color: var(--primary); }
+
+        .add-btn {
+            background: var(--primary);
+            color: white;
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: -35px;
+            box-shadow: 0 8px 20px rgba(79, 70, 229, 0.4);
+            border: 4px solid var(--bg);
+            transition: transform 0.2s;
+        }
+
+        .add-btn:active { transform: scale(0.9); }
+
+        /* --- Modal --- */
+        .modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            padding: 20px;
+        }
+
+        .modal.show { display: flex; }
+
+        .modal-content {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            padding: 25px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: var(--shadow);
+        }
+
+        .modal-content h2 { margin-top: 0; font-size: 1.2rem; }
+
+        .modal-input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            margin: 15px 0;
+            background: var(--bg);
+            color: var(--text-main);
+        }
+
+        .modal-btns {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .btn-primary { background: var(--primary); color: white; }
+        .btn-ghost { background: var(--border); color: var(--text-main); }
+
+        /* --- Toast --- */
+        #toast {
+            position: fixed;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: #111827;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            z-index: 3000;
+            transition: all 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+            opacity: 0;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            white-space: nowrap;
+        }
+
+        #toast.visible {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+
+    </style>
+</head>
+<body>
+
+    <header class="app-header">
+        <h1>Roteiro de Visitas</h1>
+        <p id="current-date">Carregando data...</p>
+    </header>
+
+    <div class="dashboard">
+        <div class="stat-card">
+            <span class="stat-value" id="stat-total">0</span>
+            <span class="stat-label">Total</span>
+        </div>
+        <div class="stat-card">
+            <span class="stat-value" id="stat-done" style="color: var(--success)">0</span>
+            <span class="stat-label">Feitas</span>
+        </div>
+        <div class="stat-card">
+            <span class="stat-value" id="stat-left" style="color: var(--danger)">0</span>
+            <span class="stat-label">Restam</span>
+        </div>
+    </div>
+
+    <div class="search-container">
+        <input type="text" class="search-input" id="search-box" placeholder="Buscar loja..." oninput="filterStores()">
+    </div>
+
+    <div class="container" id="app-container">
+        <!-- Conteúdo via JS -->
+    </div>
+
+    <nav class="dock">
+        <button class="dock-item" onclick="exportReport()">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+            <span>Relatório</span>
+        </button>
+        
+        <button class="add-btn" onclick="openModal()">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </button>
+
+        <button class="dock-item" onclick="resetAll()" style="color: var(--danger)">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+            <span>Resetar</span>
+        </button>
+    </nav>
+
+    <!-- Modal Adicionar -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <h2>Nova Loja</h2>
+            <input type="text" id="new-store-name" class="modal-input" placeholder="Nome da loja ou endereço">
+            <div class="modal-btns">
+                <button class="btn btn-ghost" onclick="closeModal()">Cancelar</button>
+                <button class="btn btn-primary" onclick="addNewStore()">Adicionar</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="toast">Mensagem</div>
+
+<script>
+    // Estado Inicial
+    let stores = [];
+    let visits = {};
+    let searchTerm = "";
+
+    const DEFAULT_STORES = [
+        "NOVO ATACADAO POA", "ROSSI EST DO LAGEADO VELHO 1013", "ROSSI R CARVALHO DE ARAUJO 12",
+        "TENDA FERRAZ DE VASCONCELOS", "ASSAI ITAQUAQUECETUBA 75", "COMERCIAL ESPERANCA ITAQUAQUECETUBA",
+        "D AVO ITAQUAQUECETUBA", "REDE DROGA LESTE ITALO ADAMI 750", "COMERCIAL ESPERANCA SUZANO",
+        "REDE ROSSI R ABEL BAPTISTA CAMILO", "ATACADAO FERRAZ DE VASCONCELOS", "ATACADAO SUZANO",
+        "ATACADAO ITAQUAQUECETUBA", "AFLORE COSMETICOS PRACA PADRE JOAO ALVARES", "AFLORE GOYA CENTRO",
+        "DROGASIL ITAQUAQUECETUBA 1", "KOBAYASHI JARDIM ITAPUA", "PAGUE MENOS SEBASTIAO FERREIRA DOS SANTOS",
+        "SEMAR ITAQUAQUECETUBA", "SPANI CAIUBY", "SPANI JD ODETE", "REDE SHIBATA AV ARMANDO SALLES",
+        "TENDA ITAQUAQUECETUBA", "SEMAR POA", "SHIBATA POA", "TENDA SUZANO", "SHIBATA ITAQUAQUECETUBA",
+        "ASSAI NORDESTINA 32", "RAIZ SUPERATACADO ITAIM", "ROLDAO ITAIM PAULISTA", "SONDA ITAIM PAULISTA",
+        "SUPERMERCADO ROSSI NEW LTDA", "ATACADAO ITAQUAQUECETUBA (HENRIQUE)", "ASSAI SAO MIGUEL 3",
+        "ASSAI GUAIANASES 60", "ASSAI GUIANAZES ESTACAO 276", "SEMAR GUAIANAZES", "FARMA D AVO ITAIM PAULISTA",
+        "SEMAR VILA ROMANOPOLIS", "DROGASIL SP VILA CURUCA 1", "DROGASIL SUZANO 2", "DROGASIL SUZANO 3",
+        "DSP ITAIM PAULISTA III", "DSP JARDIM HELENA", "DSP PIRES DO RIO", "DSP SAO MIGUEL", "DSP SUZANO",
+        "DSP SUZANO II", "PAGUE MENOS GENERAL FRANCISCO GLICERIO", "PROMOFARMA MARECHAL TITO",
+        "REDE DROGA LESTE AV OLIVEIRA FREIRE", "REDE DROGA LESTE AV OLIVEIRA FREIRE 1700",
+        "REDE DROGA LESTE DR JOAO OTAVIANO PEREIRA", "REDE DROGA LESTE NORDESTINA 4923",
+        "REDE DROGA LESTE R DESEMBARGADOR PAULO", "REDE DROGA LESTE R MANUEL LEMES DA SILVA",
+        "REDE DROGA LESTE R SAO GONCALO DO RIO", "REDE DROGA LESTE R TIBURCIO DE SOUSA",
+        "ROSSI JARDIM BARAO", "SHIBATA FERRAZ DE VASCONCELOS", "ASSAI ITAQUAQUECETUBA INDUSTRIAL 343"
+    ];
+
+    // Inicialização
+    window.onload = () => {
+        const savedStores = localStorage.getItem('pro_stores_v1');
+        const savedVisits = localStorage.getItem('pro_visits_v1');
+        
+        stores = savedStores ? JSON.parse(savedStores) : [...DEFAULT_STORES];
+        visits = savedVisits ? JSON.parse(savedVisits) : {};
+        
+        updateDate();
+        render();
+    };
+
+    function updateDate() {
+        const now = new Date();
+        const options = { weekday: 'long', day: 'numeric', month: 'long' };
+        document.getElementById('current-date').innerText = now.toLocaleDateString('pt-BR', options);
+    }
+
+    function render() {
+        const container = document.getElementById('app-container');
+        container.innerHTML = '';
+
+        const filtered = stores.filter(s => s.toLowerCase().includes(searchTerm.toLowerCase()));
+        
+        const pending = filtered.filter(s => !visits[s]);
+        const done = filtered.filter(s => visits[s]);
+
+        // Dashboard Stats
+        document.getElementById('stat-total').innerText = stores.length;
+        document.getElementById('stat-done').innerText = Object.keys(visits).length;
+        document.getElementById('stat-left').innerText = stores.length - Object.keys(visits).length;
+
+        if (pending.length > 0) {
+            renderSection("📍 Pendentes", pending, false);
+        }
+
+        if (done.length > 0) {
+            renderSection("✅ Concluídas", done, true);
+        }
+
+        if (filtered.length === 0) {
+            container.innerHTML = `<div style="text-align:center; padding: 40px; color: var(--text-muted)">Nenhuma loja encontrada.</div>`;
+        }
+
+        save();
+    }
+
+    function renderSection(title, list, isVisited) {
+        const container = document.getElementById('app-container');
+        
+        const header = document.createElement('div');
+        header.className = 'section-header';
+        header.innerHTML = `<span class="section-title">${title} (${list.length})</span>`;
+        container.appendChild(header);
+
+        list.forEach(storeName => {
+            const card = document.createElement('div');
+            card.className = `store-card ${isVisited ? 'visited' : ''}`;
+            
+            const time = visits[storeName] ? `<div class="store-meta">Visitado às ${visits[storeName]}</div>` : `<div class="store-meta">Clique para marcar</div>`;
+
+            card.innerHTML = `
+                <div class="check-btn" onclick="toggleVisit('${storeName}')">
+                    ${isVisited ? '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>' : ''}
+                </div>
+                <div class="store-info" onclick="toggleVisit('${storeName}')">
+                    <div class="store-name">${storeName}</div>
+                    ${time}
+                </div>
+                <div class="actions">
+                    <button class="icon-action map" onclick="openMap('${storeName}')">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                    </button>
+                    <button class="icon-action delete" onclick="deleteStore('${storeName}')">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                    </button>
+                </div>
+            `;
+            container.appendChild(card);
+        });
+    }
+
+    // Ações
+    function toggleVisit(name) {
+        if (navigator.vibrate) navigator.vibrate(50);
+        
+        if (visits[name]) {
+            delete visits[name];
+            notify("Visita removida");
+        } else {
+            const time = new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+            visits[name] = time;
+            notify("Visita registrada! ✅");
+        }
+        render();
+    }
+
+    function filterStores() {
+        searchTerm = document.getElementById('search-box').value;
+        render();
+    }
+
+    function openMap(name) {
+        window.open(`https://www.google.com/maps/search/${encodeURIComponent(name)}`, '_blank');
+    }
+
+    function deleteStore(name) {
+        if (confirm(`Remover "${name}" da sua lista permanentemente?`)) {
+            stores = stores.filter(s => s !== name);
+            if (visits[name]) delete visits[name];
+            render();
+            notify("Loja removida");
+        }
+    }
+
+    function addNewStore() {
+        const input = document.getElementById('new-store-name');
+        const name = input.value.trim();
+        if (name) {
+            if (stores.includes(name)) {
+                notify("Esta loja já existe!");
+                return;
+            }
+            stores.unshift(name);
+            input.value = "";
+            closeModal();
+            render();
+            notify("Loja adicionada! 📍");
+        }
+    }
+
+    function resetAll() {
+        if (confirm("Isso apagará todas as visitas marcadas. Continuar?")) {
+            visits = {};
+            render();
+            notify("Progresso resetado 🔄");
+        }
+    }
+
+    function exportReport() {
+        const done = Object.keys(visits);
+        if (done.length === 0) {
+            notify("Nenhuma visita para relatar.");
+            return;
+        }
+
+        let text = `📋 *RELATÓRIO DE VISITAS - ${new Date().toLocaleDateString('pt-BR')}*\n\n`;
+        text += `✅ *Concluídas:* ${done.length}\n`;
+        text += `📍 *Pendentes:* ${stores.length - done.length}\n\n`;
+        text += `*DETALHES:*\n`;
+        
+        done.forEach(name => {
+            text += `- ${name} (às ${visits[name]})\n`;
+        });
+
+        const encoded = encodeURIComponent(text);
+        window.open(`https://wa.me/?text=${encoded}`, '_blank');
+    }
+
+    // UI Helpers
+    function openModal() { document.getElementById('modal').classList.add('show'); document.getElementById('new-store-name').focus(); }
+    function closeModal() { document.getElementById('modal').classList.remove('show'); }
+    
+    function save() {
+        localStorage.setItem('pro_stores_v1', JSON.stringify(stores));
+        localStorage.setItem('pro_visits_v1', JSON.stringify(visits));
+    }
+
+    function notify(msg) {
+        const t = document.getElementById('toast');
+        t.innerText = msg;
+        t.classList.add('visible');
+        setTimeout(() => t.classList.remove('visible'), 2500);
+    }
+</script>
+
+</body>
+</html>
